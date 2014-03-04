@@ -9,7 +9,7 @@
   <link rel="icon" href="http://d15dxvojnvxp1x.cloudfront.net/assets/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.css">
   <link rel="stylesheet" type="text/css" media="all" href="css/style.css">
-  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="js/markdown.js"></script>
 </head>
 
@@ -29,7 +29,9 @@ $(document).ready(function(){
   function getContents(filename){
     var fileuri = repouri+'/'+filename;
     $.getJSON(fileuri, function(json){
-      postcontent = atob(json.content);
+      console.log(json);
+      var postcontentfat = json.content.replace(/\s/g, '');
+      postcontent = atob(postcontentfat);
       parsedpostcontent = markdown.toHTML(postcontent);
       $('#content').append(parsedpostcontent);  
     });
