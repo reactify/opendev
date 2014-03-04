@@ -33,7 +33,9 @@ $(document).ready(function(){
       var postcontentfat = json.content.replace(/\s/g, '');
       postcontent = atob(postcontentfat);
       parsedpostcontent = markdown.toHTML(postcontent);
-      $('#content').append(parsedpostcontent);  
+      var post = '<div class="post-content">'+parsedpostcontent+'</div>';
+      post = post+'</br>';
+      $('#content').append(post);
     });
   };
 
