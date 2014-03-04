@@ -21,25 +21,33 @@
   </div>
 <script type="text/javascript">
 $(document).ready(function(){
-    var repouri  = 'https://api.github.com/repos/ylevtov/devart-template/contents/project_posts';
-    var postcontent;
-    var parsedpostcontent;
+  var repouri  = 'https://api.github.com/repos/ylevtov/devart-template/contents/project_posts';
+  var commitsuri  = 'https://api.github.com/repos/ylevtov/devart-template/commits';
+  var postcontent;
+  var parsedpostcontent;
 
-    function getContents(filename){
-      var fileuri = repouri+'/'+filename;
-      $.getJSON(fileuri, function(json){
-        postcontent = atob(json.content);
-        parsedpostcontent = markdown.toHTML(postcontent);
-        $('#content').append(parsedpostcontent);  
-      });
-    };
-
-    $.getJSON(repouri, function(json){
-      for (var i = 0; i<json.length; i++) {
-        console.log(json[i].name);
-        getContents(json[i].name);
-      };
+  function getContents(filename){
+    var fileuri = repouri+'/'+filename;
+    $.getJSON(fileuri, function(json){
+      postcontent = atob(json.content);
+      parsedpostcontent = markdown.toHTML(postcontent);
+      $('#content').append(parsedpostcontent);  
     });
+  };
+
+  $.getJSON(repouri, function(json){
+    for (var i = 0; i<json.length; i++) {
+      console.log(json[i].name);
+      getContents(json[i].name);
+    };
+  });
+
+  $.getJSON(commitsuri, function(json){
+    for (var i = 0; i<json.length; i++) {
+      console.log(json[i].commit.author.date);
+      // getContents(json[i].name);
+    };
+  });
 });
 </script>
 </body>
