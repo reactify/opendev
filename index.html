@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Github API Webapp using jQuery - Treehouse Demo</title>
+  <meta name="author" content="Jake Rocheleau">
+  <link rel="shortcut icon" href="http://d15dxvojnvxp1x.cloudfront.net/assets/favicon.ico">
+  <link rel="icon" href="http://d15dxvojnvxp1x.cloudfront.net/assets/favicon.ico">
+  <link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" media="all" href="css/style.css">
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/markdown.js"></script>
+</head>
+
+<body>
+  <div id="w">
+    <h1>Posts</h1>
+    <div id="content">
+    </div>
+  </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    var repouri  = 'https://api.github.com/repos/ylevtov/devart-template/contents/project_posts';
+    var postcontent;
+    var parsedpostcontent;
+
+    function getContents(filename){
+      var fileuri = repouri+'/'+filename;
+      $.getJSON(fileuri, function(json){
+        postcontent = atob(json.content);
+        parsedpostcontent = markdown.toHTML(postcontent);
+        $('#content').append(parsedpostcontent);  
+      });
+    };
+
+    $.getJSON(repouri, function(json){
+      for (var i = 0; i<json.length; i++) {
+        console.log(json[i].name);
+        getContents(json[i].name);
+      };
+    });
+});
+</script>
+</body>
+</html>
